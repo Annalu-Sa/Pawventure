@@ -2,6 +2,7 @@ package main;
 
 import entity.Player1;
 import entity.Player2;
+import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -14,20 +15,23 @@ public class GamePanel extends JPanel implements Runnable{
     final int originalTitleSize = 16;//16x16 title: tamanho default
     final int scale = 3;//reajustar a escala do pixel pra nao ficar minusculo na tela
     public final int tileSize = originalTitleSize * scale;//48x48 pixels: 3*16
-    final int maxScreenCol = 16;//16 colunas
-    final int maxScreenRow = 12;//12 fileiras
+
+    // Assim a janela tem 2380 × 1024, bem perto de um notebook e a grade preenche a tela inteira.
+    final int maxScreenCol = 28;// 28 colunas * 48 pixels  por tile   = 1344
+    final int maxScreenRow = 16;//16 fileiras * 48 pixels = 768
 
     //TAMANHO DO PERSONAGEM (32x32 pixels):
     public final int originalCharSize = 32;//precisa ser public pra acessar de outro package
-    public final int charSize = originalCharSize * scale;
+    public final int charSize = originalCharSize * scale;//32*3 = 96 pixels na tela pro charracter
 
     //TAMANHO DA TELA DO JOGO:
-    final int screenWidth = 85 * maxScreenCol;//85x16 = 1366 pixels = comp de um notebook médio
-    final int screenHeight = 64 * maxScreenRow;//64x12 = 768 pixels = alt de um notebook médio
+    final int screenWidth = 85 * maxScreenCol;//85x28 = 2380 pixels = comp de um notebook médio
+    final int screenHeight = 64 * maxScreenRow;//64x16 = 1024 pixels = alt de um notebook médio
 
     //FPS
     int FPS = 60;
 
+    TileManager tileM = new TileManager(this);
     KeyHandlerP1 keyP1 = new KeyHandlerP1();
     KeyHandlerP2 keyP2 = new KeyHandlerP2();
     //VAMOS CRIAR O TEMPO DO JOGO(GAME CLOCK): tempo precisa rodar no jogo como na vida real
@@ -48,11 +52,12 @@ public class GamePanel extends JPanel implements Runnable{
     }
     //INICIALIZANDO A THREAD
     public void startGameThread() {
-        gameThread = new Thread(this);//passando a classe GamePanel para esse(this) construtor
-        gameThread.start();//automaticamente chama o metodo run
+        //passando a classe GamePanel para esse(this) construtor
+        gameThread = new Thread(this);//"this" é o Runnable
+        gameThread.start();//cria a thread e chama run()
     }
     @Override
-    public void run(){
+    public void run(){ //esse run() roda na thread criada("gameThread")
         double drawInterval = 1000000000/FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
@@ -80,33 +85,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
     }
-//    public void run(){ //game loop com SLEEP, q trava a Thread, outra opção de loop
-//        //aqui criamos o GAME LOOP
-//        double drawInterval = 1000000000/FPS; //1*10^9 = 1 segundo em nano segundo; 1*10^9/60 ~ 0,016 segundo
-//        double nextDrawTime = System.nanoTime() + drawInterval;//System.nanoTime() retorna o tempo atual em nano segundos
-//
-//        while(gameThread != null){//enq gameThread EXISTE o loop acontece
-//            //Precisamos de dois métodos: 1.UPDATE e 2.DRAW
-//            update();
-//            repaint();
-//
-//            try {
-//                double remainingTime = nextDrawTime - System.nanoTime();
-//                remainingTime /= 1000000;//converte nanosegundo pra milisegundo
-//
-//                if(remainingTime < 0){
-//                    remainingTime = 0;
-//                }
-//
-//                Thread.sleep((long)remainingTime);
-//
-//                nextDrawTime += drawInterval;
-//
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
+
     //1. metodo UPDATE INFORMATION, como posicao de personagem
     public void update(){
         player1.update();
@@ -117,6 +96,9 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;//tem mais funcoes que Graphics
 
+        //É necessário desenhar o "chão"(tile) antes do player = é como se fosse um layer
+        //Se for o contrário o tiles vão cobrir o player character
+        tileM.draw(g2);
         player1.draw(g2);
         player2.draw(g2);
 

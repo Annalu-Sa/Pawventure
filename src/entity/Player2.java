@@ -28,6 +28,7 @@ public class Player2 extends Entity{
 
     public void getPlayerImage(){
         try{
+            //aqui player 2 é o ladino-> pensar em como fazer um seletor de personagem
             up1 = ImageIO.read(getClass().getResourceAsStream("/ladino/LadinoBack1.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream("/ladino/LadinoBack2.png"));
             up3 = ImageIO.read(getClass().getResourceAsStream("/ladino/LadinoBack3.png"));
