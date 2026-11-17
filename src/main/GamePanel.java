@@ -17,8 +17,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int tileSize = originalTitleSize * scale;//48x48 pixels: 3*16
 
     // Assim a janela tem 2380 × 1024, bem perto de um notebook e a grade preenche a tela inteira.
-    public final int maxScreenCol = 28;// 28 colunas * 48 pixels  por tile   = 1344
-    public final int maxScreenRow = 16;//16 fileiras * 48 pixels = 768
+    public final int maxScreenCol = 16;// 28 colunas * 48 pixels  por tile   = 1344  ***alteração Largura: 16 × 48 = 768 pixels.
+    public final int maxScreenRow = 12;//16 fileiras * 48 pixels = 768               ***alteraçãoAltura: 12 × 48 = 576 pixels.
 
     //TAMANHO DO PERSONAGEM (32x32 pixels):
     public final int originalCharSize = 32;//precisa ser public pra acessar de outro package

@@ -69,7 +69,7 @@ public class TileManager {
             }
             br.close();
         }catch(Exception e){
-
+            e.printStackTrace();  //se acontecer algum erro no carregamento do mapa aparece a mensagem no terminal.
         }
     }
 
