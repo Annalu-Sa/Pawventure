@@ -17,16 +17,29 @@ public class GamePanel extends JPanel implements Runnable{
     public final int tileSize = originalTitleSize * scale;//48x48 pixels: 3*16
 
     // Assim a janela tem 2380 × 1024, bem perto de um notebook e a grade preenche a tela inteira.
-    final int maxScreenCol = 28;// 28 colunas * 48 pixels  por tile   = 1344
-    final int maxScreenRow = 16;//16 fileiras * 48 pixels = 768
+    public final int maxScreenCol = 16;// 28 colunas * 48 pixels  por tile   = 1344  ***alteração Largura: 16 × 48 = 768 pixels.
+    public final int maxScreenRow = 12;//16 fileiras * 48 pixels = 768               ***alteraçãoAltura: 12 × 48 = 576 pixels.
 
     //TAMANHO DO PERSONAGEM (32x32 pixels)
     public final int originalCharSize = 32;//precisa ser public pra acessar de outro package
     public final int charSize = originalCharSize * scale;//32*3 = 96 pixels na tela pro charracter
 
     //TAMANHO DA TELA DO JOGO:
-    final int screenWidth = 85 * maxScreenCol;//85x28 = 2380 pixels = comp de um notebook médio
-    final int screenHeight = 64 * maxScreenRow;//64x16 = 1024 pixels = alt de um notebook médio
+    // public final int screenWidth = 85 * maxScreenCol;//85x28 = 2380 pixels = comp de um notebook médio
+    // public final int screenHeight = 64 * maxScreenRow;//64x16 = 1024 pixels = alt de um notebook médio
+    // TAMANHO DA TELA DO JOGO:
+    public final int screenWidth = tileSize * maxScreenCol;
+    public final int screenHeight = tileSize * maxScreenRow;
+
+
+    //WORLD SETTINGS
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
+    public int cameraX;
+    public int cameraY;
 
     //FPS
     int FPS = 60;
@@ -36,8 +49,8 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandlerP2 keyP2 = new KeyHandlerP2();
     //VAMOS CRIAR O TEMPO DO JOGO(GAME CLOCK): tempo precisa rodar no jogo como na vida real
     Thread gameThread;
-    Player1 player1 = new Player1(this, keyP1);
-    Player2 player2 = new Player2(this, keyP2);
+    public Player1 player1 = new Player1(this, keyP1);
+    public Player2 player2 = new Player2(this, keyP2);
 
 
     //CONSTRUTOR DO GamePanel
@@ -90,6 +103,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         player1.update();
         player2.update();
+
+        cameraX = (player1.worldX + player2.worldX) / 2;
+        cameraY = (player1.worldY + player2.worldY) / 2;
     }
     //2. metodo DRAW THE SCREEN WITH THE UPDATED INFORMATION
     public void paintComponent(Graphics g){//esse metodo "paintComponent" é a forma default de desenhar no JPanel

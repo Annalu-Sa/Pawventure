@@ -12,16 +12,23 @@ public class Player1 extends Entity{
     GamePanel gp;
     KeyHandlerP1 keyP1;
 
+    //public final int screenX;
+    //public final int screenY;  //indicam aonde desenhemos o personagem na tela, não mudam durante o jogo
+
     public Player1(GamePanel gp, KeyHandlerP1 keyP1){
         this.gp = gp;
         this.keyP1 = keyP1;
+
+
+        //screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        //screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
         setDefaultValues();
         getPlayerImage();
     }
     public void setDefaultValues(){//set p1 default position
-        x = 100;
-        y = 100;
+        worldX = gp.tileSize * 22;
+        worldY = gp.tileSize * 20;
         speed = 4;
         direction = "down";
     }
@@ -67,19 +74,19 @@ public class Player1 extends Entity{
                 keyP1.leftPressed == true|| keyP1.rightPressed == true){
             if(keyP1.upPressed == true){
                 direction = "up";
-                y -= speed;
+                worldY -= speed;
             }
             else if(keyP1.downPressed == true){
                 direction = "down";
-                y += speed;
+                worldY += speed;
             }
             else if(keyP1.leftPressed == true){
                 direction = "left";
-                x -= speed;
+                worldX -= speed;
             }
             else if(keyP1.rightPressed == true){
                 direction = "right";
-                x += speed;
+                worldX += speed;
             }
 
             //sprites left e right
@@ -222,6 +229,9 @@ public class Player1 extends Entity{
                 }
                 break;
         }
-        g2.drawImage(image, x, y, gp.charSize, gp.charSize, null);
+        int screenX = worldX - gp.cameraX + gp.screenWidth / 2;
+        int screenY = worldY - gp.cameraY + gp.screenHeight / 2;
+
+        g2.drawImage(image, screenX, screenY, gp.charSize, gp.charSize, null);
     }
 }

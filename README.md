@@ -1,6 +1,6 @@
 # Pawventure
 ## Sobre o jogo
-- Action RPG com Co-op local, em tempo real e híbrido(aventura com batalhas de turnos);
+- Action RPG com Co-op local, em tempo real e batalha em tempo real [ou híbrido(aventura com batalhas de turnos)];
 - Multiplayer de 2 jogadores;
 - Estilo The Legend of Zelda 1986 e Chrono Trigger 1995;
 ## História
