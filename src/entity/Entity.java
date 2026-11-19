@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 //CLASSE MÃE DE PLAYER, MONSTRO E NPC CLASS
 public class Entity {
 
-    public int x, y;
+    public int worldX, worldY; //posição do personagem no mapa mundo
     public int speed;
 
     public int spriteCounterUPDOWN = 0;

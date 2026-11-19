@@ -31,6 +31,16 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
+
+    //WORLD SETTINGS
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
+    public int cameraX;
+    public int cameraY;
+
     //FPS
     int FPS = 60;
 
@@ -39,8 +49,8 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandlerP2 keyP2 = new KeyHandlerP2();
     //VAMOS CRIAR O TEMPO DO JOGO(GAME CLOCK): tempo precisa rodar no jogo como na vida real
     Thread gameThread;
-    Player1 player1 = new Player1(this, keyP1);
-    Player2 player2 = new Player2(this, keyP2);
+    public Player1 player1 = new Player1(this, keyP1);
+    public Player2 player2 = new Player2(this, keyP2);
 
 
     //CONSTRUTOR DO GamePanel
@@ -93,6 +103,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         player1.update();
         player2.update();
+
+        cameraX = (player1.worldX + player2.worldX) / 2;
+        cameraY = (player1.worldY + player2.worldY) / 2;
     }
     //2. metodo DRAW THE SCREEN WITH THE UPDATED INFORMATION
     public void paintComponent(Graphics g){//esse metodo "paintComponent" é a forma default de desenhar no JPanel
