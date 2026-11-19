@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements Runnable{
     final int maxScreenCol = 28;// 28 colunas * 48 pixels  por tile   = 1344
     final int maxScreenRow = 16;//16 fileiras * 48 pixels = 768
 
-    //TAMANHO DO PERSONAGEM (32x32 pixels):
+    //TAMANHO DO PERSONAGEM (32x32 pixels)
     public final int originalCharSize = 32;//precisa ser public pra acessar de outro package
     public final int charSize = originalCharSize * scale;//32*3 = 96 pixels na tela pro charracter
 
