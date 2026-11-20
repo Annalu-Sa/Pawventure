@@ -16,7 +16,6 @@ public class GamePanel extends JPanel implements Runnable{
     final int scale = 3;//reajustar a escala do pixel pra nao ficar minusculo na tela
     public final int tileSize = originalTitleSize * scale;//48x48 pixels: 3*16
 
-    // Assim a janela tem 2380 × 1024, bem perto de um notebook e a grade preenche a tela inteira.
     public final int maxScreenCol = 16;// 28 colunas * 48 pixels  por tile   = 1344  ***alteração Largura: 16 × 48 = 768 pixels.
     public final int maxScreenRow = 12;//16 fileiras * 48 pixels = 768               ***alteraçãoAltura: 12 × 48 = 576 pixels.
 
@@ -102,11 +101,39 @@ public class GamePanel extends JPanel implements Runnable{
     //1. metodo UPDATE INFORMATION, como posicao de personagem
     public void update(){
         player1.update();
-        player2.update();
 
-        cameraX = (player1.worldX + player2.worldX) / 2;
-        cameraY = (player1.worldY + player2.worldY) / 2;
+        // câmera centrada no centro do sprite do P1
+        cameraX = player1.worldX + charSize / 2; //Somando charSize / 2 à câmera, o centro do sprite do P1 é que fica no centro
+        cameraY = player1.worldY  + charSize / 2;
+        //corrige a camera indo pra fora da tela; impõe um teto(Math.min) e um piso(Math.max)
+        cameraX = Math.max(screenWidth / 2,  Math.min(cameraX, worldWidth  - screenWidth / 2));
+        cameraY = Math.max(screenHeight / 2, Math.min(cameraY, worldHeight - screenHeight / 2));
+        limitPlayer1ToScreen();
+
+        player2.update();
+        limitPlayer2ToScreen();   // depois de mover o P2 e de atualizar a câmera
     }
+
+    private void limitPlayer2ToScreen(){
+        int minX = cameraX - screenWidth / 2;
+        int maxX = cameraX + screenWidth / 2 - charSize;
+        int minY = cameraY - screenHeight / 2;
+        int maxY = cameraY + screenHeight / 2 - charSize;
+
+        player2.worldX = Math.max(minX, Math.min(player2.worldX, maxX));
+        player2.worldY = Math.max(minY, Math.min(player2.worldY, maxY));
+    }
+
+    private void limitPlayer1ToScreen(){
+        int minX = cameraX - screenWidth / 2;
+        int maxX = cameraX + screenWidth / 2 - charSize;
+        int minY = cameraY - screenHeight / 2;
+        int maxY = cameraY + screenHeight / 2 - charSize;
+
+        player1.worldX = Math.max(minX, Math.min(player1.worldX, maxX));
+        player1.worldY = Math.max(minY, Math.min(player1.worldY, maxY));
+    }
+
     //2. metodo DRAW THE SCREEN WITH THE UPDATED INFORMATION
     public void paintComponent(Graphics g){//esse metodo "paintComponent" é a forma default de desenhar no JPanel
         super.paintComponent(g);

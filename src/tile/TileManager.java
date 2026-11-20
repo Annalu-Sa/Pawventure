@@ -29,22 +29,22 @@ public class TileManager {
     public void getTileImage(){
         System.out.println(getClass().getResource("/tiles/grass.png"));
         try{
-            tile[0] = new Tile();
+            tile[0] = new Tile();//grass
             tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
 
-            tile[1] = new Tile();
+            tile[1] = new Tile();//wall
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
 
-            tile[2] = new Tile();
+            tile[2] = new Tile();//water
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
 
-            tile[3] = new Tile();
+            tile[3] = new Tile();//earth
             tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
 
-            tile[4] = new Tile();
+            tile[4] = new Tile();//tree
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
 
-            tile[5] = new Tile();
+            tile[5] = new Tile();//sand
             tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
 
         }catch(IOException e){
@@ -106,7 +106,6 @@ public class TileManager {
 
                     g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
-
             
             worldCol ++;
 
@@ -116,7 +115,5 @@ public class TileManager {
 
             }
         }
-        
-
     }
 }
