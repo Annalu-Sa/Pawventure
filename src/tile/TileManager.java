@@ -12,8 +12,8 @@ import javax.imageio.ImageIO;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tile; //criamos um array de blocos("tiles")
-    int mapTileNum[][];
+    public Tile[] tile; //criamos um array de blocos("tiles")
+    public int mapTileNum[][];
 
     //CONSTRUTOR:
     public TileManager(GamePanel gp){
@@ -34,15 +34,18 @@ public class TileManager {
 
             tile[1] = new Tile();//wall
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+            tile[1].collision = true;
 
             tile[2] = new Tile();//water
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+            tile[2].collision = true;
 
             tile[3] = new Tile();//earth
             tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
 
             tile[4] = new Tile();//tree
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
+            tile[4].collision = true;
 
             tile[5] = new Tile();//sand
             tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));

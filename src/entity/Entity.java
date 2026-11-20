@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
 //CLASSE MÃE DE PLAYER, MONSTRO E NPC CLASS
 public class Entity {
@@ -20,4 +21,7 @@ public class Entity {
                          down1, down2, down3, down4, down5, down6, down7, down8,/*down = front*/
                          up1, up2, up3, up4, up5, up6, up7, up8; //back
     public String direction;
+
+    public Rectangle solidArea; //área de colisão do personagem
+    public boolean collisionOn = false;
 }

@@ -48,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandlerP2 keyP2 = new KeyHandlerP2();
     //VAMOS CRIAR O TEMPO DO JOGO(GAME CLOCK): tempo precisa rodar no jogo como na vida real
     Thread gameThread;
+    public CollisionChecker collisionCheck = new CollisionChecker(this);
     public Player1 player1 = new Player1(this, keyP1);
     public Player2 player2 = new Player2(this, keyP2);
 
@@ -111,6 +112,11 @@ public class GamePanel extends JPanel implements Runnable{
         limitPlayer1ToScreen();
 
         player2.update();
+        if (keyP2.teleportPressed) {
+            player2.worldX = player1.worldX + charSize/6;   // ao lado do P1, não em cima
+            player2.worldY = player1.worldY;
+            keyP2.teleportPressed = false;                // consome o aperto: 1 tecla = 1 teleporte
+        }
         limitPlayer2ToScreen();   // depois de mover o P2 e de atualizar a câmera
     }
 

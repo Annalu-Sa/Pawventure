@@ -8,6 +8,7 @@ public class KeyHandlerP2 implements KeyListener{
     @Override
     public void keyTyped(KeyEvent e) {}
 
+    public boolean teleportPressed;
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();//retorna o int keyCode associado a tecla neste evento
@@ -23,6 +24,10 @@ public class KeyHandlerP2 implements KeyListener{
         }
         if(code == KeyEvent.VK_RIGHT){
             rightPressed = true;
+        }
+        //botao de teletransporte do player2 pro player1
+        if(code == KeyEvent.VK_L){
+            teleportPressed = true;
         }
     }
 
@@ -41,6 +46,9 @@ public class KeyHandlerP2 implements KeyListener{
         }
         if(code == KeyEvent.VK_RIGHT){
             rightPressed = false;
+        }
+        if(code == KeyEvent.VK_L){
+            teleportPressed = false;
         }
     }
 }

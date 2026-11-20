@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.awt.Rectangle;
 
 public class Player2 extends Entity{
     GamePanel gp;
@@ -19,8 +20,12 @@ public class Player2 extends Entity{
         this.gp = gp;
         this.keyP2 = keyP2;
 
-        //screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        //screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        //Rectangle(x, y, width, height)
+        solidArea = new Rectangle();
+        solidArea.x =32;
+        solidArea.y = 64;
+        solidArea.width = 32;
+        solidArea.height = 32;
 
         setDefaultValues();
         getPlayerImage();
@@ -73,19 +78,36 @@ public class Player2 extends Entity{
                 keyP2.leftPressed == true|| keyP2.rightPressed == true){
             if(keyP2.upPressed == true){
                 direction = "up";
-                worldY -= speed;
             }
             else if(keyP2.downPressed == true){
                 direction = "down";
-                worldY += speed;
             }
             else if(keyP2.leftPressed == true){
                 direction = "left";
-                worldX -= speed;
             }
             else if(keyP2.rightPressed == true){
                 direction = "right";
-                worldX += speed;
+            }
+
+            //CHECK TILE COLLISION
+            collisionOn = false;
+            gp.collisionCheck.checkTile(this);
+            //SE COLLISION = FALSE, PLAYER PODE MOVER
+            if(collisionOn == false){
+                switch(direction){
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
             }
 
             //sprites left e right
