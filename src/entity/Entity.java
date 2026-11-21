@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
+import main.GamePanel;
 
 //CLASSE MÃE DE PLAYER, MONSTRO E NPC CLASS
 public class Entity {
@@ -15,6 +16,10 @@ public class Entity {
     public int spriteCounterLR = 0;
     public int spriteNumLR = 1;
 
+    public GamePanel gp;
+
+    int hasKey = 0;
+
     //BufferedImage usamos pra guardar e usar nossas imgs
     public BufferedImage right1, right2, right3, right4,
                          left1, left2, left3, left4,
@@ -23,5 +28,43 @@ public class Entity {
     public String direction;
 
     public Rectangle solidArea; //área de colisão do personagem
+
+    public int solidAreaDefaultX, solidAreaDefaultY;
+
     public boolean collisionOn = false;
+
+    public Entity(GamePanel gp) {
+        this.gp = gp;
+    }
+
+    public void pickUpObject(int i) {
+
+    if(i != 999) {
+
+        String objectName = gp.obj[i].name;
+
+        switch(objectName) {
+
+            case "Key":
+                hasKey++;
+                gp.obj[i] = null;
+                break;
+
+            case "Door":
+                if(hasKey > 0){
+                    gp.obj[i] = null;
+                    hasKey--;
+                }
+                
+                break;
+
+            case "Door1":
+                if(hasKey > 0){
+                    gp.obj[i] = null;
+                   hasKey--;
+                }
+                break;
+        }
+    }
+}
 }

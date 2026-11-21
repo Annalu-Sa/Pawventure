@@ -3,6 +3,7 @@ package main;
 import entity.Player1;
 import entity.Player2;
 import tile.TileManager;
+import object.SuperObject;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -49,8 +50,11 @@ public class GamePanel extends JPanel implements Runnable{
     //VAMOS CRIAR O TEMPO DO JOGO(GAME CLOCK): tempo precisa rodar no jogo como na vida real
     Thread gameThread;
     public CollisionChecker collisionCheck = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
     public Player1 player1 = new Player1(this, keyP1);
     public Player2 player2 = new Player2(this, keyP2);
+    public SuperObject obj[] = new SuperObject[10];
+
 
 
     //CONSTRUTOR DO GamePanel
@@ -63,6 +67,12 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyP2);
         this.setFocusable(true);//com isso, GamePanel "foca" em receber tecla (key input)
     }
+    
+    public void setupGame (){ 
+
+        aSetter.setObject();
+    }
+    
     //INICIALIZANDO A THREAD
     public void startGameThread() {
         //passando a classe GamePanel para esse(this) construtor
@@ -145,9 +155,19 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;//tem mais funcoes que Graphics
 
+        
+
         //É necessário desenhar o "chão"(tile) antes do player = é como se fosse um layer
         //Se for o contrário o tiles vão cobrir o player character
         tileM.draw(g2);
+
+        //OBJECT
+        for(int i = 0; i < obj.length; i++){
+            if(obj[i] != null){
+                obj[i].draw(g2, this);
+            }
+        }
+
         player1.draw(g2);
         player2.draw(g2);
 

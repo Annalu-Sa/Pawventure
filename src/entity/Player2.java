@@ -10,20 +10,22 @@ import javax.imageio.ImageIO;
 import java.awt.Rectangle;
 
 public class Player2 extends Entity{
-    GamePanel gp;
+
     KeyHandlerP2 keyP2;
 
     //public final int screenX;
     //public final int screenY;
 
     public Player2(GamePanel gp, KeyHandlerP2 keyP2){
-        this.gp = gp;
+        super(gp);
         this.keyP2 = keyP2;
 
         //Rectangle(x, y, width, height)
         solidArea = new Rectangle();
         solidArea.x =32;
         solidArea.y = 64;
+        solidAreaDefaultX =  solidArea.x;
+        solidAreaDefaultY =  solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
 
@@ -92,6 +94,11 @@ public class Player2 extends Entity{
             //CHECK TILE COLLISION
             collisionOn = false;
             gp.collisionCheck.checkTile(this);
+
+            //CHECK OBJECT COLLISION
+            int objIndex = gp.collisionCheck.checkObject(this);
+            pickUpObject(objIndex);
+
             //SE COLLISION = FALSE, PLAYER PODE MOVER
             if(collisionOn == false){
                 switch(direction){
@@ -159,6 +166,8 @@ public class Player2 extends Entity{
         }
 
     }
+
+
     public void draw(Graphics2D g2){
 //        //PLAYER 2(P2)
 //        g2.setColor(Color.gray);

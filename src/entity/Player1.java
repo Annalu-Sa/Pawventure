@@ -10,20 +10,22 @@ import javax.imageio.ImageIO;
 import java.awt.Rectangle;
 
 public class Player1 extends Entity{
-    GamePanel gp;
+
     KeyHandlerP1 keyP1;
 
     //public final int screenX;
     //public final int screenY;  //indicam aonde desenhemos o personagem na tela, não mudam durante o jogo
 
     public Player1(GamePanel gp, KeyHandlerP1 keyP1){
-        this.gp = gp;
+        super(gp);
         this.keyP1 = keyP1;
 
         //Rectangle(x, y, width, height)
         solidArea = new Rectangle();
         solidArea.x =32;
         solidArea.y = 64;
+        solidAreaDefaultX =  solidArea.x;
+        solidAreaDefaultY =  solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
 
@@ -92,6 +94,12 @@ public class Player1 extends Entity{
             //CHECK TILE COLLISION
             collisionOn = false;
             gp.collisionCheck.checkTile(this);
+
+            //CHECK OBJECT COLLISION
+            int objIndex = gp.collisionCheck.checkObject(this);
+
+            pickUpObject(objIndex);
+
             //SE COLLISION = FALSE, PLAYER PODE MOVER
             if(collisionOn == false){
                 switch(direction){
@@ -160,6 +168,8 @@ public class Player1 extends Entity{
 
 
     }
+
+
     public void draw(Graphics2D g2){
 //        //PLAYER 1(P1)
 //        g2.setColor(Color.green);//define a cor que será usada para desenhar objetos
